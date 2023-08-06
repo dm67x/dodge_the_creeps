@@ -7,5 +7,5 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-godot = { git = "https://github.com/godot-rust/gdext", ref = "38f7a57" }
+godot = { git = "https://github.com/godot-rust/gdext", rev = "38f7a57" }
 rand = "0.8.5"

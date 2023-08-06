@@ -1,3 +1,4 @@
+mod game;
 mod mob;
 mod player;
 

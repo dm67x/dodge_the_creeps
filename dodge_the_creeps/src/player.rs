@@ -3,7 +3,7 @@ use godot::prelude::*;
 
 #[derive(GodotClass)]
 #[class(base=Area2D)]
-struct Player {
+pub struct Player {
     speed: f64,
 
     #[base]

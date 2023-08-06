@@ -24,7 +24,9 @@ impl RigidBody2DVirtual for Mob {
     }
 
     fn ready(&mut self) {
-        let mut animated_sprite = self.base.get_node_as::<AnimatedSprite2D>("AnimatedSprite");
+        let mut animated_sprite = self
+            .base
+            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2D");
         let mob_types = animated_sprite
             .get_sprite_frames()
             .map(|frames| frames.get_animation_names().to_vec())
