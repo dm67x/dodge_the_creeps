@@ -1,0 +1,11 @@
+[package]
+name = "dodge_the_creeps"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", ref = "38f7a57" }
+rand = "0.8.5"
