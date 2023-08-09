@@ -1,5 +1,3 @@
-mod game;
-mod mob;
 mod player;
 
 use godot::prelude::*;

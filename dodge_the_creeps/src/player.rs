@@ -1,73 +1,70 @@
-use godot::engine::{AnimatedSprite2D, Area2D, Area2DVirtual, CollisionShape2D, PhysicsBody2D};
+use godot::engine::{AnimatedSprite2D, Area2D, Area2DVirtual, CollisionShape2D};
 use godot::prelude::*;
 
 #[derive(GodotClass)]
-#[class(base=Area2D)]
+#[class(base = Area2D)]
 pub struct Player {
-    speed: f64,
-
+    animated_sprite: Option<Gd<AnimatedSprite2D>>,
+    collision_shape: Option<Gd<CollisionShape2D>>,
+    input: Option<Gd<Input>>,
+    screen_size: Vector2,
+    #[export]
+    speed: f32,
     #[base]
     base: Base<Area2D>,
 }
 
 #[godot_api]
-impl Player {
-    #[signal]
-    fn hit();
-
-    #[func]
-    fn on_body_entered(&mut self, _body: Gd<PhysicsBody2D>) {
-        self.base.hide();
-        self.base.emit_signal("hit".into(), &[]);
-        self.base
-            .get_node_as::<CollisionShape2D>("CollisionShape2D")
-            .set_deferred("disabled".into(), true.to_variant());
-    }
-
-    #[func]
-    pub fn start(&mut self, position: Vector2) {
-        self.base.set_global_position(position);
-        self.base.show();
-        self.base
-            .get_node_as::<CollisionShape2D>("CollisionShape2D")
-            .set_disabled(false);
-    }
-}
+impl Player {}
 
 #[godot_api]
 impl Area2DVirtual for Player {
     fn init(base: Base<Area2D>) -> Self {
-        Self { speed: 400.0, base }
+        Self {
+            animated_sprite: None,
+            collision_shape: None,
+            input: None,
+            screen_size: Vector2::ZERO,
+            speed: 400.0,
+            base,
+        }
     }
 
     fn ready(&mut self) {
-        self.base.hide();
+        let Self {
+            base,
+            animated_sprite,
+            collision_shape,
+            input,
+            screen_size,
+            ..
+        } = self;
+        animated_sprite.replace(base.get_node_as::<AnimatedSprite2D>("AnimatedSprite2D"));
+        collision_shape.replace(base.get_node_as::<CollisionShape2D>("CollisionShape2D"));
+        input.replace(Input::singleton());
+        *screen_size = base.get_viewport_rect().size;
     }
 
-    fn physics_process(&mut self, delta: f64) {
-        let screen_size = self.base.get_viewport_rect().size;
-        let input = Input::singleton();
-        let mut animated_sprite = self
-            .base
-            .get_node_as::<AnimatedSprite2D>("AnimatedSprite2D");
+    fn process(&mut self, delta: f64) {
+        let Self {
+            animated_sprite,
+            input,
+            speed,
+            screen_size,
+            base,
+            ..
+        } = self;
+        let animated_sprite = animated_sprite.as_mut().unwrap();
+        let input = input.as_ref().unwrap();
 
         let mut velocity = Vector2::ZERO;
-
-        if input.is_action_pressed("move_right".into()) {
-            velocity.x += 1.0;
-        }
-        if input.is_action_pressed("move_left".into()) {
-            velocity.x -= 1.0;
-        }
-        if input.is_action_pressed("move_down".into()) {
-            velocity.y += 1.0;
-        }
-        if input.is_action_pressed("move_up".into()) {
-            velocity.y -= 1.0;
-        }
+        velocity.x = input.get_action_strength("move_right".into())
+            - input.get_action_strength("move_left".into());
+        velocity.y = input.get_action_strength("move_down".into())
+            - input.get_action_strength("move_up".into());
 
         if velocity.length() > 0.0 {
-            velocity = velocity.normalized() * self.speed as f32;
+            velocity = velocity.normalized() * *speed;
 
             if velocity.x != 0.0 {
                 animated_sprite.set_animation("walk".into());
@@ -83,8 +80,8 @@ impl Area2DVirtual for Player {
             animated_sprite.stop();
         }
 
-        let position = (self.base.get_global_position() + velocity * delta as f32)
-            .clamp(Vector2::ZERO, screen_size);
-        self.base.set_global_position(position);
+        let position =
+            (base.get_position() + velocity * delta as f32).clamp(Vector2::ZERO, *screen_size);
+        base.set_position(position);
     }
 }
