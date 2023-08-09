@@ -15,7 +15,36 @@ pub struct Player {
 }
 
 #[godot_api]
-impl Player {}
+impl Player {
+    #[signal]
+    fn hit();
+
+    #[func]
+    fn on_body_entered(&mut self) {
+        let Self {
+            base,
+            collision_shape,
+            ..
+        } = self;
+        let collision_shape = collision_shape.as_mut().unwrap();
+        base.hide();
+        base.emit_signal("hit".into(), &[]);
+        collision_shape.set_deferred("disabled".into(), true.to_variant());
+    }
+
+    #[func]
+    pub fn start(&mut self, position: Vector2) {
+        let Self {
+            base,
+            collision_shape,
+            ..
+        } = self;
+        let collision_shape = collision_shape.as_mut().unwrap();
+        base.set_position(position);
+        base.show();
+        collision_shape.set_disabled(false);
+    }
+}
 
 #[godot_api]
 impl Area2DVirtual for Player {
@@ -43,6 +72,8 @@ impl Area2DVirtual for Player {
         collision_shape.replace(base.get_node_as::<CollisionShape2D>("CollisionShape2D"));
         input.replace(Input::singleton());
         *screen_size = base.get_viewport_rect().size;
+
+        base.hide();
     }
 
     fn process(&mut self, delta: f64) {

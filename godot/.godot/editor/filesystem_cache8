@@ -1,8 +1,10 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1691604756
+::res://::1691612470
 dodge_the_creeps.gdextension::GDExtension::-1::1691324639::0::1::::<><>::
-export_presets.cfg::TextFile::-1::1691345260::0::1::::<><>::
-player.tscn::PackedScene::2944672877530108071::1691603377::0::1::::<><>::uid://cowp8re3sdg83::::res://assets/art/playerGrey_up1.png<>uid://chf1w6xgibks4::::res://assets/art/playerGrey_up2.png<>uid://bblyffstreh3x::::res://assets/art/playerGrey_walk1.png<>uid://barajc5d6tsfd::::res://assets/art/playerGrey_walk2.png
+export_presets.cfg::TextFile::-1::1691604885::0::1::::<><>::
+main.tscn::PackedScene::6765039145985163058::1691612112::0::1::::<><>::uid://ba0hj7cgxed7v::::res://mob.tscn<>uid://bh7olj4yg6o36::::res://player.tscn
+mob.tscn::PackedScene::2438472902779428273::1691610872::0::1::::<><>::uid://bmt6a0dg60pbu
+player.tscn::PackedScene::2944672877530108071::1691609950::0::1::::<><>::uid://cowp8re3sdg83
 ::res://assets/::1691324720
 ::res://assets/art/::1691324739
 enemyFlyingAlt_1.png::CompressedTexture2D::3269793529485591594::1686964387::1691324739::1::::<><>::
@@ -21,4 +23,4 @@ playerGrey_walk2.png::CompressedTexture2D::2421531329226594525::1686964387::1691
 FONTLOG.txt::TextFile::-1::1686964387::0::1::::<><>::
 LICENSE.txt::TextFile::-1::1686964387::0::1::::<><>::
 Xolonium-Regular.ttf::FontFile::2428745142314838800::1686964387::1691324739::1::::<><>::
-::res://exports/::1691345260
+::res://exports/::1691604884
