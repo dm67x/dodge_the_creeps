@@ -1,1 +1,4 @@
-res://player.tscn::1fa9bba065f24509210d1df3e2d039f7::1691604767::res://.godot/exported/133200997/export-36a25e342948d0ceacc500772b5412b3-player.scn
+res://player.tscn::50d3aff91b3cb1bc69c9c588b179d5b6::1691618164::res://.godot/exported/133200997/export-36a25e342948d0ceacc500772b5412b3-player.scn
+res://hud.tscn::b839d64408d7cd109d3ceb53a3e74b89::1691618165::res://.godot/exported/133200997/export-f4cf891e5f7a93b93d9b27cfb8401ccb-hud.scn
+res://main.tscn::a8bc6468dd9d23e2c3767f3b4069ed24::1691618164::res://.godot/exported/133200997/export-3070c538c03ee49b7677ff960a3f5195-main.scn
+res://mob.tscn::a7503ea4235fbd15e2286ca77613fd31::1691618164::res://.godot/exported/133200997/export-5b94865898bd9b5cb44e426bf42f6f48-mob.scn

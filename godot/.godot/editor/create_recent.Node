@@ -1,3 +1,6 @@
+TextureRect
+AudioStreamPlayer
+ColorRect
 Timer
 Hud
 Button

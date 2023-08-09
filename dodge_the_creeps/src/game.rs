@@ -34,6 +34,8 @@ impl Game {
             score_timer,
             mob_timer,
             hud,
+            music,
+            death_sound,
             ..
         } = self;
         let score_timer = score_timer.as_mut().unwrap();
@@ -44,6 +46,12 @@ impl Game {
 
         let mut hud = hud.as_mut().map(|hud| hud.bind_mut()).unwrap();
         hud.show_game_over();
+
+        let music = music.as_mut().unwrap();
+        music.stop();
+
+        let death_sound = death_sound.as_mut().unwrap();
+        death_sound.play();
     }
 
     #[func]
@@ -55,6 +63,7 @@ impl Game {
             start_timer,
             hud,
             base,
+            music,
             ..
         } = self;
         *score = 0;
@@ -74,6 +83,9 @@ impl Game {
         base.get_tree()
             .unwrap()
             .call_group("mobs".into(), "queue_free".into(), &[]);
+
+        let music = music.as_mut().unwrap();
+        music.play();
     }
 
     #[func]
@@ -156,6 +168,8 @@ impl NodeVirtual for Game {
             mob_timer,
             score_timer,
             start_timer,
+            music,
+            death_sound,
             ..
         } = self;
         player.replace(base.get_node_as::<Player>("Player"));
@@ -165,5 +179,7 @@ impl NodeVirtual for Game {
         score_timer.replace(base.get_node_as::<Timer>("ScoreTimer"));
         start_timer.replace(base.get_node_as::<Timer>("StartTimer"));
         mob_spawn_location.replace(base.get_node_as::<PathFollow2D>("MobPath/MobSpawnLocation"));
+        music.replace(base.get_node_as::<AudioStreamPlayer>("Music"));
+        death_sound.replace(base.get_node_as::<AudioStreamPlayer>("DeathSound"));
     }
 }
