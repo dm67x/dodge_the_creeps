@@ -1,8 +1,12 @@
+Timer
+Hud
+Button
+Label
+CanvasLayer
 Game
 PathFollow2D
 Path2D
 Marker2D
-Timer
 Node
 Mob
 VisibleOnScreenNotifier2D
@@ -12,6 +16,3 @@ RigidBody2D
 Player
 Area2D
 Control
-Button
-Label
-CanvasLayer

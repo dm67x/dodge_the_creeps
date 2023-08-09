@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3j6wwh24innw"]
+
+[ext_resource type="FontFile" uid="uid://baurcv07ipv5i" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_mliug"]
+
+[node name="Hud" type="Hud"]
+
+[node name="MessageLabel" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_mliug")
+theme_override_font_sizes/font_size = 64
+text = "Dodge the creeps!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_mliug")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_mliug")
+theme_override_font_sizes/font_size = 64
+text = "START"
+
+[node name="StartMessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="GetReadyMessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartButtonTimer" type="Timer" parent="."]
+
+[connection signal="pressed" from="StartButton" to="." method="on_start_button_pressed"]
+[connection signal="timeout" from="StartMessageTimer" to="." method="on_start_message_timer_timeout"]
+[connection signal="timeout" from="GetReadyMessageTimer" to="." method="on_get_ready_message_timer_timeout"]
+[connection signal="timeout" from="StartButtonTimer" to="." method="on_start_button_timer_timeout"]

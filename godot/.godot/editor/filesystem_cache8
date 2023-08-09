@@ -1,10 +1,11 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1691612470
+::res://::1691617386
 dodge_the_creeps.gdextension::GDExtension::-1::1691324639::0::1::::<><>::
 export_presets.cfg::TextFile::-1::1691604885::0::1::::<><>::
-main.tscn::PackedScene::6765039145985163058::1691612112::0::1::::<><>::uid://ba0hj7cgxed7v::::res://mob.tscn<>uid://bh7olj4yg6o36::::res://player.tscn
-mob.tscn::PackedScene::2438472902779428273::1691610872::0::1::::<><>::uid://bmt6a0dg60pbu
-player.tscn::PackedScene::2944672877530108071::1691609950::0::1::::<><>::uid://cowp8re3sdg83
+hud.tscn::PackedScene::4372210387179388084::1691617112::0::1::::<><>::uid://baurcv07ipv5i::::res://assets/fonts/Xolonium-Regular.ttf
+main.tscn::PackedScene::6765039145985163058::1691617111::0::1::::<><>::uid://ba0hj7cgxed7v::::res://mob.tscn<>uid://bh7olj4yg6o36::::res://player.tscn<>uid://b3j6wwh24innw::::res://hud.tscn
+mob.tscn::PackedScene::2438472902779428273::1691617168::0::1::::<><>::uid://bmt6a0dg60pbu::::res://assets/art/enemyFlyingAlt_1.png<>uid://bwvigg5dd63ug::::res://assets/art/enemyFlyingAlt_2.png<>uid://c01ewyl3kfjm0::::res://assets/art/enemySwimming_1.png<>uid://dil01kdbe5ss0::::res://assets/art/enemySwimming_2.png<>uid://bv6vi3bk3fsot::::res://assets/art/enemyWalking_1.png<>uid://cqhhlj47601os::::res://assets/art/enemyWalking_2.png
+player.tscn::PackedScene::2944672877530108071::1691617111::0::1::::<><>::uid://cowp8re3sdg83::::res://assets/art/playerGrey_up1.png<>uid://chf1w6xgibks4::::res://assets/art/playerGrey_up2.png<>uid://bblyffstreh3x::::res://assets/art/playerGrey_walk1.png<>uid://barajc5d6tsfd::::res://assets/art/playerGrey_walk2.png
 ::res://assets/::1691324720
 ::res://assets/art/::1691324739
 enemyFlyingAlt_1.png::CompressedTexture2D::3269793529485591594::1686964387::1691324739::1::::<><>::

@@ -4,12 +4,14 @@ use godot::engine::{Marker2D, Node, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
 use rand::Rng;
 
+use crate::hud::Hud;
 use crate::player::Player;
 
 #[derive(GodotClass)]
 #[class(base = Node)]
 pub struct Game {
     score: u32,
+    hud: Option<Gd<Hud>>,
     player: Option<Gd<Player>>,
     start_position: Option<Gd<Marker2D>>,
     mob_spawn_location: Option<Gd<PathFollow2D>>,
@@ -31,12 +33,17 @@ impl Game {
         let Self {
             score_timer,
             mob_timer,
+            hud,
             ..
         } = self;
         let score_timer = score_timer.as_mut().unwrap();
         let mob_timer = mob_timer.as_mut().unwrap();
+
         score_timer.stop();
         mob_timer.stop();
+
+        let mut hud = hud.as_mut().map(|hud| hud.bind_mut()).unwrap();
+        hud.show_game_over();
     }
 
     #[func]
@@ -46,20 +53,36 @@ impl Game {
             player,
             start_position,
             start_timer,
+            hud,
+            base,
             ..
         } = self;
         *score = 0;
-        let mut player = player.as_mut().map(|player| player.bind_mut()).unwrap();
+
         let start_position = start_position.as_mut().unwrap();
-        let start_timer = start_timer.as_mut().unwrap();
+
+        let mut player = player.as_mut().map(|player| player.bind_mut()).unwrap();
         player.start(start_position.get_position());
+
+        let start_timer = start_timer.as_mut().unwrap();
         start_timer.start();
+
+        let mut hud = hud.as_mut().map(|hud| hud.bind_mut()).unwrap();
+        hud.update_score(*score);
+        hud.show_get_ready();
+
+        base.get_tree()
+            .unwrap()
+            .call_group("mobs".into(), "queue_free".into(), &[]);
     }
 
     #[func]
     fn on_score_timer_timeout(&mut self) {
-        let Self { score, .. } = self;
+        let Self { score, hud, .. } = self;
         *score += 1;
+
+        let mut hud = hud.as_mut().map(|hud| hud.bind_mut()).unwrap();
+        hud.update_score(*score);
     }
 
     #[func]
@@ -109,6 +132,7 @@ impl NodeVirtual for Game {
     fn init(base: Base<Node>) -> Self {
         Self {
             score: 0,
+            hud: None,
             player: None,
             start_position: None,
             mob_spawn_location: None,
@@ -125,6 +149,7 @@ impl NodeVirtual for Game {
     fn ready(&mut self) {
         let Self {
             base,
+            hud,
             player,
             start_position,
             mob_spawn_location,
@@ -134,12 +159,11 @@ impl NodeVirtual for Game {
             ..
         } = self;
         player.replace(base.get_node_as::<Player>("Player"));
+        hud.replace(base.get_node_as::<Hud>("Hud"));
         start_position.replace(base.get_node_as::<Marker2D>("StartPosition"));
         mob_timer.replace(base.get_node_as::<Timer>("MobTimer"));
         score_timer.replace(base.get_node_as::<Timer>("ScoreTimer"));
         start_timer.replace(base.get_node_as::<Timer>("StartTimer"));
         mob_spawn_location.replace(base.get_node_as::<PathFollow2D>("MobPath/MobSpawnLocation"));
-
-        self.new_game();
     }
 }
